@@ -1,0 +1,373 @@
+import SwiftUI
+
+struct Meal: Identifiable {
+    let id: Int
+    let name: String
+    let ingredients: [String]
+    let instructions: String
+    let photo: String
+    let dietaryRestrictions: [String]
+}
+
+struct User {
+    let id: Int
+    let name: String
+    let friends: [User]
+    let meals: [Meal]
+}
+
+struct MealRow: View {
+    let meal: Meal
+    
+    var body: some View {
+        HStack {
+            Image(meal.photo)
+                .resizable()
+                .frame(width: 50, height: 50)
+            
+            VStack(alignment: .leading) {
+                Text(meal.name)
+                    .font(.headline)
+                
+                Text(meal.ingredients.joined(separator: ", "))
+                    .font(.subheadline)
+                
+                Text(meal.dietaryRestrictions.joined(separator: ", "))
+                    .font(.caption)
+            }
+        }
+    }
+}
+
+struct MealList: View {
+    @State private var meals: [Meal] = [
+        Meal(id: 1, name: "Spaghetti Carbonara", ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan cheese", "Pepper"], instructions: "1. Cook spaghetti according to package instructions. 2. In a separate pan, cook pancetta until crispy. 3. Beat eggs in a bowl, then mix in parmesan cheese and pepper. 4. Drain spaghetti and add it to the pan with pancetta. 5. Remove pan from heat, pour egg mixture over spaghetti, and stir until coated. 6. Serve and enjoy!", photo: "spaghetti", dietaryRestrictions: ["Gluten"]),
+        Meal(id: 2, name: "Chicken Stir-Fry", ingredients: ["Chicken breast", "Vegetables", "Soy sauce", "Garlic", "Ginger"], instructions: "1. Cut chicken breast into bite-sized pieces. 2. In a pan, cook chicken until browned. 3. Add vegetables to the pan and stir-fry until tender. 4. In a small bowl, mix together soy sauce, garlic, and ginger. 5. Pour mixture over the stir-fry and continue cooking until sauce has thickened. 6. Serve and enjoy!", photo: "chicken_stir_fry", dietaryRestrictions: ["None"]),
+        Meal(id: 3, name: "Salmon with Lemon Butter Sauce", ingredients: ["Salmon fillet", "Lemon", "Butter", "Parsley"], instructions: "1. Heat oven to 400°F. 2. Place salmon fillet on a baking sheet. 3. Bake for 12-15 minutes, or until cooked through. 4. In a small saucepan, melt butter over medium heat. 5. Squeeze in lemon juice and stir in parsley. 6. Serve salmon with lemon butter sauce on the side. 7. Enjoy!", photo: "salmon", dietaryRestrictions: ["None"]),
+    ]
+    
+    var body: some View {
+        NavigationView {
+            List(meals) { meal in
+                MealRow(meal: meal)
+            }
+            .navigationBarTitle("Meals")
+        }
+
+
+
+struct MealPlanner: View {
+@State private var meals: [Meal] = [
+Meal(id: 1, name: "Spaghetti Carbonara", ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan cheese", "Pepper"], instructions: "1. Cook spaghetti according to package instructions. 2. In a separate pan, cook pancetta until crispy. 3. Beat eggs in a bowl, then mix in parmesan cheese and pepper. 4. Drain spaghetti and add it to the pan with pancetta. 5. Remove pan from heat, pour egg mixture over spaghetti, and stir until coated. 6. Serve and enjoy!", photo: "spaghetti", dietaryRestrictions: ["Gluten"]),
+Meal(id: 2, name: "Chicken Stir-Fry", ingredients: ["Chicken breast", "Vegetables", "Soy sauce", "Garlic", "Ginger"], instructions: "1. Cut chicken breast into bite-sized pieces. 2. In a pan, cook chicken until browned. 3. Add vegetables to the pan and stir-fry until tender. 4. In a small bowl, mix together soy sauce, garlic, and ginger. 5. Pour mixture over the stir-fry and continue cooking until sauce has thickened. 6. Serve and enjoy!", photo: "chicken_stir_fry", dietaryRestrictions: ["None"]),
+Meal(id: 3, name: "Salmon with Lemon Butter Sauce", ingredients: ["Salmon fillet", "Lemon", "Butter", "Parsley"], instructions: "1. Heat oven to 400°F. 2. Place salmon fillet on a baking sheet. 3. Bake for 12-15 minutes, or until cooked through. 4. In a small saucepan, melt butter over medium heat. 5. Squeeze in lemon juice and stir in parsley. 6. Serve salmon with lemon butter sauce on the side. 7. Enjoy!", photo: "salmon", dietaryRestrictions: ["None"]),
+]
+@State private var likedMeals: [Meal] = []
+@State private var dislikedMeals: [Meal] = []
+
+php
+Copy code
+var body: some View {
+    ZStack {
+        if !meals.isEmpty {
+            MealRow(meal: meals[0])
+                .gesture(DragGesture()
+                    .onChanged { value in
+                        if value.translation.width < -100 {
+                            self.dislikedMeals.append(self.meals[0])
+                            self.meals.remove(at: 0)
+                        } else if value.translation.width > 100 {
+                            self.likedMeals.append(self.meals[0])
+                            self.meals.remove(at: 0)
+                        }
+                    }
+                )
+                .offset(x: self.meals[0].id % 2 == 0 ? -400 : 400)
+        }
+    }
+}
+}
+
+struct HealthTracker: View {
+@State private var meals: [Meal] = [
+Meal(id: 1, name: "Spaghetti Carbonara", ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan cheese", "Pepper"], instructions: "1. Cook spaghetti according to package instructions. 2. In a separate pan, cook pancetta until crispy. 3
+
+
+
+
+struct HealthTracker: View {
+@State private var meals: [Meal] = [
+Meal(id: 1, name: "Spaghetti Carbonara", ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan cheese", "Pepper"], instructions: "1. Cook spaghetti according to package instructions. 2. In a separate pan, cook pancetta until crispy. 3. Beat eggs in a bowl, then mix in parmesan cheese and pepper. 4. Drain spaghetti and add it to the pan with pancetta. 5. Remove pan from heat, pour egg mixture over spaghetti, and stir until coated. 6. Serve and enjoy!", photo: "spaghetti", dietaryRestrictions: ["Gluten"], calories: 800),
+Meal(id: 2, name: "Chicken Stir-Fry", ingredients: ["Chicken breast", "Vegetables", "Soy sauce", "Garlic", "Ginger"], instructions: "1. Cut chicken breast into bite-sized pieces. 2. In a pan, cook chicken until browned. 3. Add vegetables to the pan and stir-fry until tender. 4. In a small bowl, mix together soy sauce, garlic, and ginger. 5. Pour mixture over the stir-fry and continue cooking until sauce has thickened. 6. Serve and enjoy!", photo: "chicken_stir_fry", dietaryRestrictions: ["None"], calories: 500),
+Meal(id: 3, name: "Salmon with Lemon Butter Sauce", ingredients: ["Salmon fillet", "Lemon", "Butter", "Parsley"], instructions: "1. Heat oven to 400°F. 2. Place salmon fillet on a baking sheet. 3. Bake for 12-15 minutes, or until cooked through. 4. In a small saucepan, melt butter over medium heat. 5. Squeeze in lemon juice and stir in parsley. 6. Serve salmon with lemon butter sauce on the side. 7. Enjoy!", photo: "salmon", dietaryRestrictions: ["None"], calories: 600),
+]
+
+swift
+Copy code
+var totalCalories: Int {
+    meals.reduce(0) { $0 + $1.calories }
+}
+
+var body: some View {
+    VStack {
+        Text("Total Calories: \(totalCalories)")
+            .font(.title)
+        
+        List(meals) { meal in
+            Text("\(meal.name) - \(meal.calories) calories")
+        }
+    }
+}
+}
+
+struct GroceryList: View {
+@State private var items: [String] = []
+
+var body: some View {
+    VStack {
+        HStack {
+            TextField("Add an item", text: $newItem)
+            Button(action: addItem) {
+                Text("Add")
+            }
+        }
+        
+        List {
+            ForEach(items, id: \.self) { item in
+                Text(item)
+            }
+        }
+    }
+}
+
+var newItem: String = ""
+
+func addItem() {
+    items.append(newItem)
+    newItem = ""
+}
+}
+
+struct RecipeSharing: View {
+@State private var meals: [Meal] = [
+Meal(id: 1, name: "Spaghetti Carbonara
+
+
+
+
+struct RecipeSharing: View {
+@State private var meals: [Meal] = [
+Meal(id: 1, name: "Spaghetti Carbonara", ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan cheese", "Pepper"], instructions: "1. Cook spaghetti according to package instructions. 2. In a separate pan, cook pancetta until crispy. 3. Beat eggs in a bowl, then mix in parmesan cheese and pepper. 4. Drain spaghetti and add it to the pan with pancetta. 5. Remove pan from heat, pour egg mixture over spaghetti, and stir until coated. 6. Serve and enjoy!", photo: "spaghetti", dietaryRestrictions: ["Gluten"], calories: 800),
+Meal(id: 2, name: "Chicken Stir-Fry", ingredients: ["Chicken breast", "Vegetables", "Soy sauce", "Garlic", "Ginger"], instructions: "1. Cut chicken breast into bite-sized pieces. 2. In a pan, cook chicken until browned. 3. Add vegetables to the pan and stir-fry until tender. 4. In a small bowl, mix together soy sauce, garlic, and ginger. 5. Pour mixture over the stir-fry and continue cooking until sauce has thickened. 6. Serve and enjoy!", photo: "chicken_stir_fry", dietaryRestrictions: ["None"], calories: 500),
+Meal(id: 3, name: "Salmon with Lemon Butter Sauce", ingredients: ["Salmon fillet", "Lemon", "Butter", "Parsley"], instructions: "1. Heat oven to 400°F. 2. Place salmon fillet on a baking sheet. 3. Bake for 12-15 minutes, or until cooked through. 4. In a small saucepan, melt butter over medium heat. 5. Squeeze in lemon juice and stir in parsley. 6. Serve salmon with lemon butter sauce on the side. 7. Enjoy!", photo: "salmon", dietaryRestrictions: ["None"], calories: 600),
+]
+
+var body: some View {
+    List(meals) { meal in
+        VStack(alignment: .leading) {
+            Image(meal.photo)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 200)
+            
+            VStack(alignment: .leading) {
+                Text(meal.name)
+                    .font(.title)
+                
+                HStack(alignment: .top) {
+                    Text("Ingredients:")
+                        .font(.subheadline)
+                    Text(meal.ingredients.joined(separator: ", "))
+                        .font(.body)
+                }
+                
+                HStack(alignment: .top) {
+                    Text("Instructions:")
+                        .font(.subheadline)
+                    Text(meal.instructions)
+                        .font(.body)
+                }
+                
+                HStack(alignment: .top) {
+                    Text("Dietary Restrictions:")
+                        .font(.subheadline)
+                    Text(meal.dietaryRestrictions.joined(separator: ", "))
+                        .font(.body)
+                }
+            }
+            .padding()
+        }
+    }
+}
+}
+
+
+
+struct Meal {
+let id: Int
+let name: String
+let ingredients: [String]
+let instructions: String
+let photo: String
+let dietaryRestrictions: [String]
+let calories: Int
+}
+
+
+
+
+
+struct SwipeMeal: View {
+@State private var meals: [Meal] = [
+Meal(id: 1, name: "Spaghetti Carbonara", ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan cheese", "Pepper"], instructions: "1. Cook spaghetti according to package instructions. 2. In a separate pan, cook pancetta until crispy. 3. Beat eggs in a bowl, then mix in parmesan cheese and pepper. 4. Drain spaghetti and add it to the pan with pancetta. 5. Remove pan from heat, pour egg mixture over spaghetti, and stir until coated. 6. Serve and enjoy!", photo: "spaghetti", dietaryRestrictions: ["Gluten"], calories: 800),
+Meal(id: 2, name: "Chicken Stir-Fry", ingredients: ["Chicken breast", "Vegetables", "Soy sauce", "Garlic", "Ginger"], instructions: "1. Cut chicken breast into bite-sized pieces. 2. In a pan, cook chicken until browned. 3. Add vegetables to the pan and stir-fry until tender. 4. In a small bowl, mix together soy sauce, garlic, and ginger. 5. Pour mixture over the stir-fry and continue cooking until sauce has thickened. 6. Serve and enjoy!", photo: "chicken_stir_fry", dietaryRestrictions: ["None"], calories: 500),
+Meal(id: 3, name: "Salmon with Lemon Butter Sauce", ingredients: ["Salmon fillet", "Lemon", "Butter", "Parsley"], instructions: "1. Heat oven to 400°F. 2. Place salmon fillet on a baking sheet. 3. Bake for 12-15 minutes, or until cooked through. 4. In a small saucepan, melt butter over medium heat. 5. Squeeze in lemon juice and stir in parsley. 6. Serve salmon with lemon butter sauce on the side. 7. Enjoy!", photo: "salmon", dietaryRestrictions: ["None"], calories: 600),
+]
+
+
+    GeometryReader { geometry in
+        HStack {
+            ForEach(self.meals) { meal in
+                ZStack {
+                    Image(meal.photo)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: geometry.size.width, height: geometry.size.height)
+                        .cornerRadius(10)
+                    
+                    VStack {
+                        Spacer()
+                        
+                        HStack {
+                            Spacer()
+                            
+                            Button(action: {
+                                // handle dislike
+                            }) {
+                                Image(systemName: "xmark")
+                                    .foregroundColor(.white)
+                                    .font(.largeTitle)
+                                    .padding(30)
+                                    .background(Color.red)
+                                    .clipShape(Circle())
+                                    .padding(20)
+                            }
+                            
+                            Spacer()
+                            
+                            Button(action: {
+// handle like
+}) {
+Image(systemName: "heart")
+.foregroundColor(.white)
+.font(.largeTitle)
+.padding(30)
+.background(Color.green)
+.clipShape(Circle())
+.padding(20)
+}
+
+                            Spacer()
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+}
+
+struct MealDetail: View {
+let meal: Meal
+
+var body: some View {
+    VStack {
+        Image(meal.photo)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+        
+        Text(meal.name)
+            .font(.largeTitle)
+            .padding(.top, 30)
+        
+        Text("Ingredients:")
+            .font(.headline)
+            .padding(.top, 30)
+        
+        ForEach(meal.ingredients, id: \.self) { ingredient in
+            Text(ingredient)
+                .padding(.bottom, 10)
+        }
+        
+        Text("Instructions:")
+            .font(.headline)
+            .padding(.top, 30)
+        
+        Text(meal.instructions)
+            .padding(.top, 10)
+            .padding(.bottom, 30)
+        
+        Text("Dietary Restrictions:")
+            .font(.headline)
+            .padding(.top, 30)
+        
+        ForEach(meal.dietaryRestrictions, id: \.self) { restriction in
+            Text(restriction)
+                .padding(.bottom, 10)
+        }
+        
+        Text("Calories: \(meal.calories)")
+            .font(.headline)
+            .padding(.top, 30)
+    }
+}
+}
+
+struct MealPlan: View {
+@State private var meals: [Meal] = [
+Meal(id: 1, name: "Spaghetti Carbonara", ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan cheese", "Pepper"], instructions: "1. Cook spaghetti according to package instructions. 2. In a separate pan, cook pancetta until crispy. 3. Beat eggs in a bowl, then mix in parmesan cheese and pepper. 4. Drain spaghetti and add it to the pan with pancetta. 5. Remove pan from heat, pour egg mixture over spaghetti, and stir until coated. 6. Serve and enjoy!", photo: "spaghetti", dietaryRestrictions: ["Gluten"], calories: 800),
+Meal(id: 2, name: "Chicken Stir-Fry", ingredients: ["Chicken breast", "Vegetables", "Soy sauce", "Garlic", "Ginger"], instructions: "1. Cut chicken breast into bite-sized pieces. 2. In a pan, cook chicken until browned. 3. Add vegetables to the pan and stir-fry until tender. 4. In a small bowl, mix together soy sauce, garlic, and ginger. 5. Pour mixture over the stir-fry and continue cooking until sauce has thickened. 6. Serve and enjoy!", photo: "chicken_stir_fry", dietaryRestrictions: ["None"], calories: 500),
+Meal( Meal(id: 3, name: "Veggie Burger", ingredients: ["Veggie patty", "Bun", "Lettuce", "Tomato", "Cheese", "Ketchup", "Mustard"], instructions: "1. Grill or cook veggie patty according to package instructions. 2. Toast bun. 3. Assemble burger with lettuce, tomato, cheese, ketchup, and mustard. 4. Serve and enjoy!", photo: "veggie_burger", dietaryRestrictions: ["Vegetarian", "Low-carb"], calories: 300),
+Meal(id: 4, name: "Salmon with Asparagus", ingredients: ["Salmon fillet", "Asparagus", "Lemon", "Olive oil", "Salt", "Pepper"], instructions: "1. Preheat oven to 400°F. 2. Place salmon and asparagus on a baking sheet. 3. Squeeze lemon over salmon and asparagus, then drizzle with olive oil. 4. Sprinkle with salt and pepper. 5. Bake in oven for 15-20 minutes, or until salmon is cooked through. 6. Serve and enjoy!", photo: "salmon_asparagus", dietaryRestrictions: ["None"], calories: 600)
+]
+
+var body: some View {
+    NavigationView {
+        List(meals) { meal in
+            NavigationLink(destination: MealDetail(meal: meal)) {
+                HStack {
+                    Image(meal.photo)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 80, height: 80)
+                        .clipShape(Circle())
+                    
+                    VStack(alignment: .leading) {
+                        Text(meal.name)
+                            .font(.headline)
+                        Text("Calories: \(meal.calories)")
+                            .font(.subheadline)
+                    }
+                }
+            }
+        }
+        .navigationBarTitle("Meal Plan")
+    }
+}
+}
+
+struct Meal: Identifiable {
+let id: Int
+let name: String
+let ingredients: [String]
+let instructions: String
+let photo: String
+let dietaryRestrictions: [String]
+let calories: Int
+}
+
+struct ContentView_Previews: PreviewProvider {
+static var previews: some View {
+ContentView()
+}
+}
